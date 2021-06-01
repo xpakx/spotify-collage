@@ -6,13 +6,14 @@ import com.wrapper.spotify.exceptions.SpotifyWebApiException;
 import com.wrapper.spotify.model_objects.credentials.AuthorizationCodeCredentials;
 import com.wrapper.spotify.requests.authorization.authorization_code.AuthorizationCodeRequest;
 import com.wrapper.spotify.requests.authorization.authorization_code.AuthorizationCodeUriRequest;
+import io.github.xpakx.spotifycollage.model.AuthAddressResponse;
+import io.github.xpakx.spotifycollage.service.SpotifyAuthService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URI;
 
@@ -26,23 +27,24 @@ public class MainController {
     private SpotifyApi spotifyApi = new SpotifyApi.Builder()
             .setClientId(clientId)
             .setClientSecret(clientSecret)
-            .setRedirectUri(SpotifyHttpManager.makeUri("http://localhost:8080/redirect"))
+            .setRedirectUri(SpotifyHttpManager.makeUri("http://192.168.1.204:8080/redirect"))
             .build();
+
+    private final SpotifyAuthService spotifyAuthService;
+
+    public MainController(SpotifyAuthService spotifyAuthService) {
+        this.spotifyAuthService = spotifyAuthService;
+    }
 
 
     @GetMapping("login")
     @ResponseBody
-    public String spotifyLogin() {
-        AuthorizationCodeUriRequest authorizationCodeUriRequest = spotifyApi.authorizationCodeUri()
-                .scope("user-read-private, user-top-read")
-                .show_dialog(true)
-                .build();
-        final URI uri = authorizationCodeUriRequest.execute();
-        return uri.toString();
+    public AuthAddressResponse spotifyLogin() throws Exception {
+        return spotifyAuthService.getAuthorizationUri();
     }
 
     @GetMapping("redirect")
-    public String getSpotifyUserCode(@RequestParam("code") String userCode, HttpServletResponse response) throws IOException {
+    public String getSpotifyUserCode(@RequestParam("code") String userCode) throws IOException {
        AuthorizationCodeRequest authorizationCodeRequest = spotifyApi.authorizationCode(userCode).build();
         try{
             final AuthorizationCodeCredentials authorizationCodeCredentials = authorizationCodeRequest.execute();
@@ -50,7 +52,6 @@ public class MainController {
         } catch(IOException | SpotifyWebApiException | org.apache.hc.core5.http.ParseException e) {
 
         }
-        response.sendRedirect("http://localhost:4800/top");
         return spotifyApi.getAccessToken();
     }
 }
