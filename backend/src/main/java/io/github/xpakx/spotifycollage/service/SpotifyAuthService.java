@@ -20,9 +20,9 @@ import java.util.stream.IntStream;
 @Service
 public class SpotifyAuthService {
     @Value("${spotify.client-id}")
-    private String clientId = "";
+    private final String clientId = "";
     @Value("${spotify.client-secret}")
-    private String clientSecret = "";
+    private final String clientSecret = "";
     private final String redir = "http://192.168.1.204:8080/redirect";
     private final String scope = "user-read-private, user-top-read";
     private final String state = "i4R8utEkEBy946";
@@ -34,7 +34,7 @@ public class SpotifyAuthService {
         this.restTemplate = restTemplate;
     }
 
-    public AuthAddressResponse getAuthorizationUri() throws UnsupportedEncodingException {
+    public AuthAddressResponse getAuthorizationUri() {
         String uri = "https://accounts.spotify.com/authorize?" +
                 "client_id=" + clientId +
                 "&response_type=code" +
@@ -107,12 +107,13 @@ public class SpotifyAuthService {
         return tracks;
     }
 
-    private List<Album> generateAlbumList(List<Track> tracks) {
+    private List<Album> generateAlbumList(List<Track> tracks, Integer size) {
         Map<String, Album> albums = tracks.stream()
                 .map(Track::getAlbum)
                 .collect(Collectors.toMap(
                         Album::getId,
-                        Album::getThis
+                        Album::getThis,
+                        (existing, replacement) -> existing
                 ));
 
         List<Album> result = IntStream.range(0,tracks.size())
@@ -124,7 +125,7 @@ public class SpotifyAuthService {
                         )
                 ).entrySet().stream()
                 .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
-                .limit(9)
+                .limit(size*size)
                 .map(Map.Entry::getKey)
                 .map(albums::get)
                 .collect(Collectors.toList());
@@ -137,10 +138,11 @@ public class SpotifyAuthService {
         CollageResponse response = new CollageResponse();
         response.setUsername(getUserData(request.getToken()));
         response.setAlbums(
-                generateAlbumList(getBestTracks(request.getToken()))
+                generateAlbumList(
+                        getBestTracks(request.getToken()),
+                        request.getSize()
+                )
         );
         return response;
     }
-
-
 }

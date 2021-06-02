@@ -35,6 +35,7 @@ public class MainController {
        String token = spotifyAuthService.requestTokens(userCode);
        CollageRequest request = new CollageRequest();
        request.setToken(token);
+       request.setSize(5);
        return spotifyAuthService.getCollage(request);
     }
 

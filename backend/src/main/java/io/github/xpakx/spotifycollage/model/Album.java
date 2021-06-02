@@ -1,5 +1,6 @@
 package io.github.xpakx.spotifycollage.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,6 +14,7 @@ public class Album {
     List<Artist> artists;
     List<Cover> images;
 
+    @JsonIgnore
     public Album getThis() {
         return this;
     }
