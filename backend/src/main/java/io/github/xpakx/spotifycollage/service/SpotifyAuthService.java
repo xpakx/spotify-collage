@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 import org.springframework.web.client.RestTemplate;
@@ -20,9 +19,9 @@ import java.util.stream.IntStream;
 @Service
 public class SpotifyAuthService {
     @Value("${spotify.client-id}")
-    private final String clientId = "";
+    private String clientId = "";
     @Value("${spotify.client-secret}")
-    private final String clientSecret = "";
+    private String clientSecret = "";
     private final String redir = "http://192.168.1.204:8080/redirect";
     private final String scope = "user-read-private, user-top-read";
     private final String state = "i4R8utEkEBy946";

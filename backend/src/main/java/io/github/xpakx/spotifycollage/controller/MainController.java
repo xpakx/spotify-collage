@@ -7,6 +7,7 @@ import io.github.xpakx.spotifycollage.service.SpotifyAuthService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.io.IOException;
 
 @RestController
@@ -41,7 +42,7 @@ public class MainController {
 
     @PostMapping("image")
     @ResponseBody
-    public CollageResponse getCollage(@RequestBody CollageRequest request) {
+    public CollageResponse getCollage(@RequestBody @Valid CollageRequest request) {
         return spotifyAuthService.getCollage(request);
     }
 }
