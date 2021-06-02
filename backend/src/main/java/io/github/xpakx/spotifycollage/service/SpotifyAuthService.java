@@ -1,8 +1,6 @@
 package io.github.xpakx.spotifycollage.service;
 
-import io.github.xpakx.spotifycollage.model.AuthAddressResponse;
-import io.github.xpakx.spotifycollage.model.GetTokenRequest;
-import io.github.xpakx.spotifycollage.model.TokenResponse;
+import io.github.xpakx.spotifycollage.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.nio.charset.StandardCharsets;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 @Service
 public class SpotifyAuthService {
@@ -90,31 +89,29 @@ public class SpotifyAuthService {
         return (String) result.get("display_name");
     }
 
-    public String getBestTracks(String token) {
+    public List<Track> getBestTracks(String token) {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + token);
         HttpEntity<String> entity = new HttpEntity<>("", headers);
 
-        ResponseEntity<Object> response = restTemplate.exchange(
+        ResponseEntity<SpotifyPage> response = restTemplate.exchange(
                 "https://api.spotify.com/v1/me/top/tracks?limit=50",
                 HttpMethod.GET,
                 entity,
-                Object.class
+                SpotifyPage.class
         );
-        LinkedHashMap result = (LinkedHashMap) response.getBody();
 
-        return result.toString();
-
+        SpotifyPage<Track> responseBody = (SpotifyPage<Track>) ((SpotifyPage<?>) response.getBody());
+        List<Track> tracks = responseBody.getItems();
+        return tracks;
     }
 
-    /*
-    album->id
-    album->images->url, lowest height?
-    album->images->name
-    album->artists->id
-    album->artists->name
-    duration_ms
-    id
-    name
-     */
+    public CollageResponse getCollage(String token) {
+        CollageResponse response = new CollageResponse();
+        response.setUsername(getUserData(token));
+        response.setTracks(getBestTracks(token));
+        return response;
+    }
+
+
 }
