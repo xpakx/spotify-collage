@@ -22,7 +22,7 @@ public class SpotifyAuthService {
     private String clientId = "";
     @Value("${spotify.client-secret}")
     private String clientSecret = "";
-    private final String redir = "http://192.168.1.204:8080/redirect";
+    private final String redir = "http://192.168.1.204:4200/redirect";
     private final String scope = "user-read-private, user-top-read";
     private final String state = "i4R8utEkEBy946";
 
@@ -134,11 +134,13 @@ public class SpotifyAuthService {
 
 
     public CollageResponse getCollage(CollageRequest request) {
+		String token = requestTokens(request.getToken());
+		
         CollageResponse response = new CollageResponse();
-        response.setUsername(getUserData(request.getToken()));
+        response.setUsername(getUserData(token));
         response.setAlbums(
                 generateAlbumList(
-                        getBestTracks(request.getToken()),
+                        getBestTracks(token),
                         request.getSize()
                 )
         );

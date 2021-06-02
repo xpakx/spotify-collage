@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { SpotifyAddress } from './model/token';
+import { SpotifyAddress } from './model/spotify-address';
 import { Observable } from 'rxjs';
 import { Collage } from './model/collage';
 import { CollageRequest } from './model/collage-request';
