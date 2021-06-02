@@ -9,7 +9,12 @@ import java.util.List;
 @Setter
 public class Album {
     String id;
+    String name;
     List<Artist> artists;
     List<Cover> images;
+
+    public Album getThis() {
+        return this;
+    }
 
 }

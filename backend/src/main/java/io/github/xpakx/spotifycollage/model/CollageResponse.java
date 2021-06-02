@@ -8,6 +8,6 @@ import java.util.List;
 @Getter
 @Setter
 public class CollageResponse {
-    List<Track> tracks;
+    List<Album> albums;
     String username;
 }

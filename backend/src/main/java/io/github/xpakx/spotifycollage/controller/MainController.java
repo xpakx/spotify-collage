@@ -31,9 +31,11 @@ public class MainController {
 
     @GetMapping("redirect")
     @ResponseBody
-    public String getSpotifyUserCode(@RequestParam("code") String userCode) throws IOException {
+    public CollageResponse getSpotifyUserCode(@RequestParam("code") String userCode) throws IOException {
        String token = spotifyAuthService.requestTokens(userCode);
-       return spotifyAuthService.getUserData(token);
+       CollageRequest request = new CollageRequest();
+       request.setToken(token);
+       return spotifyAuthService.getCollage(request);
     }
 
     @PostMapping("image")

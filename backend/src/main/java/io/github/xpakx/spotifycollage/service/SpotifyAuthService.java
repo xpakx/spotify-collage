@@ -13,8 +13,9 @@ import java.net.URLEncoder;
 import org.springframework.web.client.RestTemplate;
 
 import java.nio.charset.StandardCharsets;
-import java.util.LinkedHashMap;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Service
 public class SpotifyAuthService {
@@ -106,10 +107,38 @@ public class SpotifyAuthService {
         return tracks;
     }
 
+    private List<Album> generateAlbumList(List<Track> tracks) {
+        Map<String, Album> albums = tracks.stream()
+                .map(Track::getAlbum)
+                .collect(Collectors.toMap(
+                        Album::getId,
+                        Album::getThis
+                ));
+
+        List<Album> result = IntStream.range(0,tracks.size())
+                .mapToObj((i) -> new OrderedTrack(tracks.get(i), tracks.size()-i))
+                .collect(
+                        Collectors.groupingBy(
+                                (t) -> t.getAlbum().getId(),
+                                Collectors.summingInt(OrderedTrack::getOrder)
+                        )
+                ).entrySet().stream()
+                .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
+                .limit(9)
+                .map(Map.Entry::getKey)
+                .map(albums::get)
+                .collect(Collectors.toList());
+
+        return result;
+    }
+
+
     public CollageResponse getCollage(CollageRequest request) {
         CollageResponse response = new CollageResponse();
         response.setUsername(getUserData(request.getToken()));
-        response.setTracks(getBestTracks(request.getToken()));
+        response.setAlbums(
+                generateAlbumList(getBestTracks(request.getToken()))
+        );
         return response;
     }
 
