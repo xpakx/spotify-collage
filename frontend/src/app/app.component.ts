@@ -1,6 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { AuthServiceService } from './auth-service.service';
 import { Collage } from './model/collage';
@@ -25,7 +24,7 @@ export class AppComponent  implements OnInit {
   constructor(private service: AuthServiceService, private route: ActivatedRoute) {   }
   
   ngOnInit(): void {
-    this.code = localStorage.getItem("code");
+    this.code = sessionStorage.getItem("code");
     
     this.service.getAddress().subscribe(
       (response: SpotifyAddress) => {
@@ -39,7 +38,12 @@ export class AppComponent  implements OnInit {
 
   getAlbums(result: {term: string, size: number}): void {
     if(this.code===null) {return;}
-    let request: CollageRequest = new CollageRequest(result.term, result.size, this.code, false);
+    let request: CollageRequest = new CollageRequest(
+      result.term ? result.term : 'long_term', 
+      result.size ? result.size : 3, 
+      this.code, 
+      false
+      );
     this.service.getCollage(request).subscribe(
       (response: Collage) => {
         this.collage = response;

@@ -13,7 +13,7 @@ export class RedirectComponent implements OnInit {
   ngOnInit(): void {
     let code = this.route.snapshot.queryParamMap.get("code");
     if(code) {
-      localStorage.setItem("code", code);
+      sessionStorage.setItem("code", code);
     }
     this.router.navigate(["/"]);
   }

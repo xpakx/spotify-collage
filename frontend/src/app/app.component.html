@@ -2,26 +2,32 @@ Spotify
 
 <router-outlet></router-outlet>
 
-<form #collageForm="ngForm" (ngSubmit)="getAlbums(collageForm.value)">
-  <div class="form-group">
-    <label for="term">Term</label>
-    <select class="form-control"  id="term" ngModel
-            required name="term">
-        <option *ngFor="let term of terms" [value]="term">{{term}}</option>
-    </select>
-  </div>
 
-  <div class="form-group">
-    <label for="size">Size</label>
-    <select class="form-control"  id="size" ngModel
-            required name="size">
-        <option *ngFor="let size of sizes" [value]="size">{{size}}</option>
-    </select>
-  </div>
 
-  <button *ngIf="code">Add</button>
-  <button disabled *ngIf="!code">Add</button>
-</form>
+<div *ngIf="!collage">
+  <form #collageForm="ngForm" (ngSubmit)="getAlbums(collageForm.value)">
+    <div class="form-group">
+      <label for="term">Term</label>
+      <select class="form-control"  id="term" ngModel
+              required name="term" placeholder="short_term">
+          <option value="" selected disabled hidden>{{terms[0]}}</option>
+          <option *ngFor="let term of terms" [value]="term">{{term}}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="size">Size</label>
+      <select class="form-control"  id="size" ngModel
+              required name="size">
+          <option value="" selected disabled hidden>{{sizes[0]}}</option>
+          <option *ngFor="let size of sizes" [value]="size">{{size}}</option>
+      </select>
+    </div>
+
+    <button *ngIf="code">Add</button>
+    <button disabled *ngIf="!code">Add</button>
+  </form>
+</div>
 
 
 
