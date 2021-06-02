@@ -3,21 +3,19 @@ package io.github.xpakx.spotifycollage.service;
 import io.github.xpakx.spotifycollage.model.AuthAddressResponse;
 import io.github.xpakx.spotifycollage.model.GetTokenRequest;
 import io.github.xpakx.spotifycollage.model.TokenResponse;
-import org.apache.hc.client5.http.classic.methods.HttpHead;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import org.springframework.http.HttpHeaders;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
+
 import org.springframework.web.client.RestTemplate;
 
 import java.nio.charset.StandardCharsets;
+import java.util.LinkedHashMap;
 
 @Service
 public class SpotifyAuthService {
@@ -29,7 +27,12 @@ public class SpotifyAuthService {
     private final String scope = "user-read-private, user-top-read";
     private final String state = "i4R8utEkEBy946";
 
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
+    Logger logger = LoggerFactory.getLogger(SpotifyAuthService.class);
+
+    public SpotifyAuthService(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
 
     public AuthAddressResponse getAuthorizationUri() throws UnsupportedEncodingException {
         String uri = "https://accounts.spotify.com/authorize?" +
@@ -54,7 +57,7 @@ public class SpotifyAuthService {
                 .code(code)
                 .redirect_uri(redir)
                 .build();
-        HttpEntity<GetTokenRequest> request = new HttpEntity<>(tokenRequest, headers);
+        HttpEntity<String> request = new HttpEntity<>(tokenRequest.toString(), headers);
 
         ResponseEntity<TokenResponse> response = restTemplate.postForEntity(
                 "https://accounts.spotify.com/api/token",
@@ -63,10 +66,55 @@ public class SpotifyAuthService {
         );
 
         if(response.getStatusCode().isError()) {
-            return response.getBody().getAccess_token();
+            return "error";
         }
         else {
-            return null;
+            logger.debug("Token: " + response.getBody().getAccess_token());
+            return response.getBody().getAccess_token();
         }
     }
+
+    public String getUserData(String token) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + token);
+        HttpEntity<String> entity = new HttpEntity<>("", headers);
+
+        ResponseEntity<Object> response = restTemplate.exchange(
+                "https://api.spotify.com/v1/me",
+                HttpMethod.GET,
+                entity,
+                Object.class
+        );
+        LinkedHashMap result = (LinkedHashMap) response.getBody();
+
+        return (String) result.get("display_name");
+    }
+
+    public String getBestTracks(String token) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + token);
+        HttpEntity<String> entity = new HttpEntity<>("", headers);
+
+        ResponseEntity<Object> response = restTemplate.exchange(
+                "https://api.spotify.com/v1/me/top/tracks?limit=50",
+                HttpMethod.GET,
+                entity,
+                Object.class
+        );
+        LinkedHashMap result = (LinkedHashMap) response.getBody();
+
+        return result.toString();
+
+    }
+
+    /*
+    album->id
+    album->images->url, lowest height?
+    album->images->name
+    album->artists->id
+    album->artists->name
+    duration_ms
+    id
+    name
+     */
 }

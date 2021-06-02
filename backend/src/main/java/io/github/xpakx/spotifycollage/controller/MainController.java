@@ -32,6 +32,11 @@ public class MainController {
 
     @GetMapping("redirect")
     public String getSpotifyUserCode(@RequestParam("code") String userCode) throws IOException {
-       return spotifyAuthService.requestTokens(userCode);
+       String token = spotifyAuthService.requestTokens(userCode);
+       return spotifyAuthService.getBestTracks(token);
     }
+
+    //size: 3x3, 4x4, 5x5
+    //term: long_term, medium_term, short_term
+    //display caption?
 }
