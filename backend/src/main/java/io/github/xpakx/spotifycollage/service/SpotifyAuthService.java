@@ -106,10 +106,10 @@ public class SpotifyAuthService {
         return tracks;
     }
 
-    public CollageResponse getCollage(String token) {
+    public CollageResponse getCollage(CollageRequest request) {
         CollageResponse response = new CollageResponse();
-        response.setUsername(getUserData(token));
-        response.setTracks(getBestTracks(token));
+        response.setUsername(getUserData(request.getToken()));
+        response.setTracks(getBestTracks(request.getToken()));
         return response;
     }
 
