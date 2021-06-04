@@ -5,7 +5,6 @@ import { AuthServiceService } from './auth-service.service';
 import { Collage } from './model/collage';
 import { CollageRequest } from './model/collage-request';
 import { SpotifyAddress } from './model/spotify-address';
-import { StoreService } from './store-service.service';
 
 @Component({
   selector: 'app-root',

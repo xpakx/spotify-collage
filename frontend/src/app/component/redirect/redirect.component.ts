@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthServiceService } from 'src/app/auth-service.service';
 import { TokenResponse } from 'src/app/model/token-response';
-import { StoreService } from '../../store-service.service';
 
 @Component({
   selector: 'app-redirect',
