@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Service
-public class SpotifyAuthService {
+public class SpotifyService {
     @Value("${spotify.client-id}")
     private String clientId = "";
     @Value("${spotify.client-secret}")
@@ -27,9 +27,9 @@ public class SpotifyAuthService {
     private final String state = "i4R8utEkEBy946";
 
     private final RestTemplate restTemplate;
-    Logger logger = LoggerFactory.getLogger(SpotifyAuthService.class);
+    Logger logger = LoggerFactory.getLogger(SpotifyService.class);
 
-    public SpotifyAuthService(RestTemplate restTemplate) {
+    public SpotifyService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
@@ -107,6 +107,23 @@ public class SpotifyAuthService {
         List<Track> tracks = responseBody.getItems();
         for(Track track: tracks) {logger.error("Track: " + track.getName());}
         return tracks;
+    }
+
+    public SpotifyPage<Playlist> getPlaylists(Token token) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + token.getToken());
+        HttpEntity<String> entity = new HttpEntity<>("", headers);
+
+        ResponseEntity<SpotifyPage> response = restTemplate.exchange(
+                "https://api.spotify.com/v1/me/playlists?limit=50",
+                HttpMethod.GET,
+                entity,
+                SpotifyPage.class
+        );
+
+        SpotifyPage<Playlist> result = (SpotifyPage<Playlist>) ((SpotifyPage<?>) response.getBody());
+
+        return result;
     }
 
     private List<Album> generateAlbumList(List<Track> tracks, Integer size) {

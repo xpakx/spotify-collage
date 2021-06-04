@@ -1,12 +1,11 @@
 package io.github.xpakx.spotifycollage.controller;
 
 import io.github.xpakx.spotifycollage.model.*;
-import io.github.xpakx.spotifycollage.service.SpotifyAuthService;
+import io.github.xpakx.spotifycollage.service.SpotifyService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.io.IOException;
 
 @RestController
 public class MainController {
@@ -15,9 +14,9 @@ public class MainController {
     @Value("${spotify.client-secret}")
     private String clientSecret = "";
 
-    private final SpotifyAuthService spotifyAuthService;
+    private final SpotifyService spotifyAuthService;
 
-    public MainController(SpotifyAuthService spotifyAuthService) {
+    public MainController(SpotifyService spotifyAuthService) {
         this.spotifyAuthService = spotifyAuthService;
     }
 
@@ -38,5 +37,11 @@ public class MainController {
     @ResponseBody
     public CollageResponse getCollage(@RequestBody @Valid CollageRequest request) {
         return spotifyAuthService.getCollage(request);
+    }
+
+    @GetMapping("playlists")
+    @ResponseBody
+    public SpotifyPage<Playlist> getPlaylists(@RequestBody @Valid Token request) {
+        return spotifyAuthService.getPlaylists(request);
     }
 }
