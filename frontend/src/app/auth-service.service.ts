@@ -4,6 +4,8 @@ import { SpotifyAddress } from './model/spotify-address';
 import { Observable } from 'rxjs';
 import { Collage } from './model/collage';
 import { CollageRequest } from './model/collage-request';
+import { TokenResponse } from './model/token-response';
+import { TokenRequest } from './model/token-request';
 
 @Injectable({
   providedIn: 'root'
@@ -19,5 +21,9 @@ export class AuthServiceService {
 
   public getCollage(request: CollageRequest): Observable<Collage> {
     return this.http.post<Collage>(`${this.url}/image`, request);
+  }
+
+  public getToken(request: TokenRequest): Observable<TokenResponse> {
+    return this.http.get<TokenResponse>(`${this.url}/login`);
   }
 }

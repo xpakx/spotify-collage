@@ -14,7 +14,8 @@ import { StoreService } from './store-service.service';
 })
 export class AppComponent  implements OnInit {
   title = 'spotify-collage';
-  code: string | null = null;
+  token: string | null = null;
+  username: string | null = null;
   url!: string;
   terms: string[] = ['long_term', 'medium_term', 'short_term'];
   sizes: number[] = [3, 4, 5];
@@ -22,12 +23,13 @@ export class AppComponent  implements OnInit {
   collage!: Collage;
   
 
-  constructor(private service: AuthServiceService, private route: ActivatedRoute, private router: Router, private store: StoreService) {
+  constructor(private service: AuthServiceService, private route: ActivatedRoute, private router: Router) {
 	  
 	}
 	  
   ngOnInit(): void {
-     this.code = this.store.code;
+     this.token = localStorage.getItem("token");
+     this.username = localStorage.getItem("username");
     
     
     this.service.getAddress().subscribe(
@@ -41,22 +43,22 @@ export class AppComponent  implements OnInit {
   }
 
   getAlbums(result: {term: string, size: number}): void {
-	  this.code = this.store.code;
-    if(this.code===null) {return;}
+	  this.token = localStorage.getItem("token");
+    if(this.token===null) {return;}
     let request: CollageRequest = new CollageRequest(
       result.term ? result.term : 'long_term', 
       result.size ? result.size : 3, 
-      this.code, 
+      this.token, 
       false
       );
     this.service.getCollage(request).subscribe(
       (response: Collage) => {
         this.collage = response;
-        this.code = null;
+        this.token = null;
       },
       (error: HttpErrorResponse) => {
         //show error
-        this.code = null;
+        this.token = null;
       }
     );
   }

@@ -1,8 +1,59 @@
-Spotify
+<div class="container-fluid spotify-app">
+  <div class="row">
+    <section class="col-xs-1 side-nav clean-paddings">
+      <nav class="navbar">
+         <ul class="nav">
+           <li class="brand-icon"><span class="fa fa-spotify"></span></li>
+
+           <li class="active"><a href="#"><span class="fa fa-headphones"></span>Browse</a></li>
+           <li><a [href]="url"><span class="fa fa-refresh"></span>Connect</a></li>
+           <li><a href="#"><span class="fa fa-feed"></span>Radio</a></li>
+           
+           <li><a href="#"><span class="fa fa-users"></span>Follow</a></li>
+        </ul>
+      </nav>
+    </section>
+    <section class="col-xs-11 clean-paddings">
+      <nav>
+        <div class="top-nav container-fluid">
+          <ul class="nav navbar-nav">
+            <li><a href="#">Playlists</a></li>
+            <li class="active"><a href="#">Top Tracks</a></li>
+          </ul>
+        </div>
+      </nav>
+
+      <div *ngIf="username">Logged as {{username}}</div>
+      
+      <table class="table table-songs">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Song</th>
+            <th>Artist</th>
+            <th>Album</th>
+            <th><span class="fa fa-calendar-o"></span></th>
+            <th><span class="fa fa-clock-o"></span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr tabindex="1">
+            <td><span class="fa fa-check"></span></td>
+            <td>blablabla</td>
+            <td>blablabla</td>
+            <td>blablabla</td>
+            <td class="secondary-info">2016-07-23</td>
+            <td class="secondary-info">3:54</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </div>
+</div>
 
 <router-outlet></router-outlet>
 
-
+<!--
 
 <div *ngIf="!collage">
   <form #collageForm="ngForm" (ngSubmit)="getAlbums(collageForm.value)">
@@ -35,3 +86,4 @@ Spotify
 <div *ngIf="collage">
   <div>Collage for user {{collage.username}}</div>
 </div>
+-->

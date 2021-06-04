@@ -4,5 +4,6 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class StoreService {
-  public code: string | null = null;
+  public token: string | null = null;
+  public username: string | null = null;
 }
