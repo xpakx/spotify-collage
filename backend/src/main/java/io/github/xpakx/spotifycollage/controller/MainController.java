@@ -34,16 +34,6 @@ public class MainController {
         return spotifyAuthService.requestToken(request);
     }
 
-    @GetMapping("redirect")
-    @ResponseBody
-    public CollageResponse getSpotifyUserCode(@RequestParam("code") String userCode) throws IOException {
-       String token = spotifyAuthService.requestTokens(userCode);
-       CollageRequest request = new CollageRequest();
-       request.setToken(token);
-       request.setSize(5);
-       return spotifyAuthService.getCollage(request);
-    }
-
     @PostMapping("image")
     @ResponseBody
     public CollageResponse getCollage(@RequestBody @Valid CollageRequest request) {

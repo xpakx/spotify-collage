@@ -23,7 +23,7 @@ public class SpotifyAuthService {
     @Value("${spotify.client-secret}")
     private String clientSecret = "";
     private final String redir = "http://192.168.1.204:4200/redirect";
-    private final String scope = "user-read-private user-top-read";
+    private final String scope = "user-read-private user-top-read playlist-read-private";
     private final String state = "i4R8utEkEBy946";
 
     private final RestTemplate restTemplate;
@@ -134,7 +134,7 @@ public class SpotifyAuthService {
 
         return result;
     }
-    
+
     public CollageResponse getCollage(CollageRequest request) {
         CollageResponse response = new CollageResponse();
         response.setUsername(getUserData(request.getToken()));
