@@ -18,6 +18,7 @@ export class RedirectComponent implements OnInit {
   ngOnInit(): void {
     let code = this.route.snapshot.queryParamMap.get("code");
     if(code) {
+      alert(code);
       this.spotify.getToken({code: code}).subscribe(
         (response: TokenResponse) => {
           localStorage.setItem("token", response.token);

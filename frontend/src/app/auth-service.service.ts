@@ -24,6 +24,6 @@ export class AuthServiceService {
   }
 
   public getToken(request: TokenRequest): Observable<TokenResponse> {
-    return this.http.get<TokenResponse>(`${this.url}/login`);
+    return this.http.post<TokenResponse>(`${this.url}/token`, request);
   }
 }

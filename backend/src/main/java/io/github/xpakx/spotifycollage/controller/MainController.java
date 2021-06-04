@@ -28,9 +28,9 @@ public class MainController {
         return spotifyAuthService.getAuthorizationUri();
     }
 
-    @PostMapping
+    @PostMapping("token")
     @ResponseBody
-    public TokenForClient getToken(RequestWithCode request) {
+    public TokenForClient getToken(@RequestBody RequestWithCode request) {
         return spotifyAuthService.requestToken(request);
     }
 
