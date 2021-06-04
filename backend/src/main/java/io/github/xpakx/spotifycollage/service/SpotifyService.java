@@ -71,6 +71,7 @@ public class SpotifyService {
             logger.debug("Token: " + response.getBody().getAccess_token());
             TokenForClient result = new TokenForClient();
             result.setToken(response.getBody().getAccess_token());
+            result.setUsername(getUserData(result.getToken()));
             return result;
         }
     }
@@ -124,6 +125,21 @@ public class SpotifyService {
         SpotifyPage<Playlist> result = (SpotifyPage<Playlist>) ((SpotifyPage<?>) response.getBody());
 
         return result;
+    }
+
+    public SpotifyPage<Track> getPlaylistTracks(Token token, String id) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + token);
+        HttpEntity<String> entity = new HttpEntity<>("", headers);
+
+        ResponseEntity<PlaylistWithTracks> response = restTemplate.exchange(
+                "https://api.spotify.com/v1/playlists/"+id,
+                HttpMethod.GET,
+                entity,
+                PlaylistWithTracks.class
+        );
+
+        return response.getBody().getTracks();
     }
 
     private List<Album> generateAlbumList(List<Track> tracks, Integer size) {

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
 
 @RestController
 public class MainController {
@@ -43,5 +44,11 @@ public class MainController {
     @ResponseBody
     public SpotifyPage<Playlist> getPlaylists(@RequestBody @Valid Token request) {
         return spotifyAuthService.getPlaylists(request);
+    }
+
+    @GetMapping("playlists/{id}")
+    @ResponseBody
+    public SpotifyPage<Track> getPlaylistTracks(@RequestBody @Valid Token request, @PathParam("id") String id) {
+        return spotifyAuthService.getPlaylistTracks(request, id);
     }
 }
