@@ -1,1 +1,22 @@
-<p>playlist-table works!</p>
+<table class="table table-songs">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Song</th>
+        <th>Artist</th>
+        <th>Album</th>
+        <th><span class="fa fa-calendar-o"></span></th>
+        <th><span class="fa fa-music"></span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr tabindex="1" *ngFor="let playlist of playlists">
+        <td><span class="fa fa-check"></span></td>
+        <td>{{playlist.name}}</td>
+        <td>blablabla</td>
+        <td>blablabla</td>
+        <td class="secondary-info">2016-07-23</td>
+        <td class="secondary-info">{{playlist.tracks.total}}</td>
+      </tr>
+    </tbody>
+  </table>

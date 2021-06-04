@@ -6,6 +6,9 @@ import { Collage } from './model/collage';
 import { CollageRequest } from './model/collage-request';
 import { TokenResponse } from './model/token-response';
 import { TokenRequest } from './model/token-request';
+import { Playlist } from './model/playlist';
+import { Page } from './model/page';
+import { Token } from './model/token';
 
 @Injectable({
   providedIn: 'root'
@@ -25,5 +28,9 @@ export class AuthServiceService {
 
   public getToken(request: TokenRequest): Observable<TokenResponse> {
     return this.http.post<TokenResponse>(`${this.url}/token`, request);
+  }
+
+  public getPlaylists(request: Token): Observable<Page<Playlist>> {
+    return this.http.post<Page<Playlist>>(`${this.url}/playlists`, request);
   }
 }

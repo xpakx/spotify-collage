@@ -40,7 +40,7 @@ public class MainController {
         return spotifyAuthService.getCollage(request);
     }
 
-    @GetMapping("playlists")
+    @PostMapping("playlists")
     @ResponseBody
     public SpotifyPage<Playlist> getPlaylists(@RequestBody @Valid Token request) {
         return spotifyAuthService.getPlaylists(request);

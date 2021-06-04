@@ -10,7 +10,8 @@ import { TrackTableComponent } from './component/track-table/track-table.compone
 import { PlaylistTableComponent } from './component/playlist-table/playlist-table.component';
 
 const routes: Routes = [
-  { path: 'redirect', component: RedirectComponent }
+  { path: 'redirect', component: RedirectComponent },
+  { path: 'playlists', component: PlaylistTableComponent }
 ]
 
 @NgModule({

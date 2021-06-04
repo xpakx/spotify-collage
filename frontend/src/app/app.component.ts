@@ -61,4 +61,8 @@ export class AppComponent  implements OnInit {
       }
     );
   }
+
+  getPlaylists(): void {
+    this.router.navigate(["/playlists"]);
+  }
 }
