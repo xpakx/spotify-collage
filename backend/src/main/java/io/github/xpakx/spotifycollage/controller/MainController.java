@@ -1,8 +1,6 @@
 package io.github.xpakx.spotifycollage.controller;
 
-import io.github.xpakx.spotifycollage.model.AuthAddressResponse;
-import io.github.xpakx.spotifycollage.model.CollageRequest;
-import io.github.xpakx.spotifycollage.model.CollageResponse;
+import io.github.xpakx.spotifycollage.model.*;
 import io.github.xpakx.spotifycollage.service.SpotifyAuthService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +26,12 @@ public class MainController {
     @ResponseBody
     public AuthAddressResponse spotifyLogin() throws Exception {
         return spotifyAuthService.getAuthorizationUri();
+    }
+
+    @PostMapping
+    @ResponseBody
+    public TokenForClient getToken(RequestWithCode request) {
+        return spotifyAuthService.requestToken(request);
     }
 
     @GetMapping("redirect")

@@ -23,7 +23,7 @@ public class SpotifyAuthService {
     @Value("${spotify.client-secret}")
     private String clientSecret = "";
     private final String redir = "http://192.168.1.204:4200/redirect";
-    private final String scope = "user-read-private, user-top-read";
+    private final String scope = "user-read-private user-top-read";
     private final String state = "i4R8utEkEBy946";
 
     private final RestTemplate restTemplate;
@@ -45,7 +45,7 @@ public class SpotifyAuthService {
         return response;
     }
 
-    public String requestTokens(String code) {
+    public TokenForClient requestToken(RequestWithCode requestFromClient) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
@@ -53,7 +53,7 @@ public class SpotifyAuthService {
                 .client_id((clientId))
                 .client_secret(clientSecret)
                 .grant_type("authorization_code")
-                .code(code)
+                .code(requestFromClient.getCode())
                 .redirect_uri(redir)
                 .build();
         HttpEntity<String> request = new HttpEntity<>(tokenRequest.toString(), headers);
@@ -65,11 +65,13 @@ public class SpotifyAuthService {
         );
 
         if(response.getStatusCode().isError()) {
-            return "error";
+            return null;
         }
         else {
             logger.debug("Token: " + response.getBody().getAccess_token());
-            return response.getBody().getAccess_token();
+            TokenForClient result = new TokenForClient();
+            result.setToken(response.getBody().getAccess_token());
+            return result;
         }
     }
 
@@ -103,6 +105,7 @@ public class SpotifyAuthService {
 
         SpotifyPage<Track> responseBody = (SpotifyPage<Track>) ((SpotifyPage<?>) response.getBody());
         List<Track> tracks = responseBody.getItems();
+        for(Track track: tracks) {logger.error("Track: " + track.getName());}
         return tracks;
     }
 
@@ -131,16 +134,13 @@ public class SpotifyAuthService {
 
         return result;
     }
-
-
+    
     public CollageResponse getCollage(CollageRequest request) {
-		String token = requestTokens(request.getToken());
-		
         CollageResponse response = new CollageResponse();
-        response.setUsername(getUserData(token));
+        response.setUsername(getUserData(request.getToken()));
         response.setAlbums(
                 generateAlbumList(
-                        getBestTracks(token),
+                        getBestTracks(request.getToken()),
                         request.getSize()
                 )
         );
