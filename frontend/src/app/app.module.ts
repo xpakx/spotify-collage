@@ -6,6 +6,7 @@ import { RouterModule, Routes } from '@angular/router'
 import { HttpClientModule } from '@angular/common/http';
 import { RedirectComponent } from './component/redirect/redirect.component';
 import { FormsModule } from '@angular/forms';
+import { TrackTableComponent } from './component/track-table/track-table.component';
 
 const routes: Routes = [
   { path: 'redirect', component: RedirectComponent }
@@ -14,7 +15,8 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    RedirectComponent
+    RedirectComponent,
+    TrackTableComponent
   ],
   imports: [
     BrowserModule,

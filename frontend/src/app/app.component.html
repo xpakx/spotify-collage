@@ -25,33 +25,13 @@
 
       <div *ngIf="username">Logged as {{username}}</div>
       
-      <table class="table table-songs">
-        <thead>
-          <tr>
-            <th></th>
-            <th>Song</th>
-            <th>Artist</th>
-            <th>Album</th>
-            <th><span class="fa fa-calendar-o"></span></th>
-            <th><span class="fa fa-clock-o"></span></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr tabindex="1">
-            <td><span class="fa fa-check"></span></td>
-            <td>blablabla</td>
-            <td>blablabla</td>
-            <td>blablabla</td>
-            <td class="secondary-info">2016-07-23</td>
-            <td class="secondary-info">3:54</td>
-          </tr>
-        </tbody>
-      </table>
+      <app-track-table></app-track-table>
+      <router-outlet></router-outlet>
     </section>
   </div>
 </div>
 
-<router-outlet></router-outlet>
+
 
 <!--
 
