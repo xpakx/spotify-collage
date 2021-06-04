@@ -23,8 +23,7 @@ body {
     background: #1c1c1f;
     color: #88898c;
     text-align: center;
-
-    height: 100vh;
+    min-height: 100vh;
   }
   .side-nav .navbar {
     margin-bottom: 0;

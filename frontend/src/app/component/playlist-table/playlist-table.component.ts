@@ -11,6 +11,8 @@ import { Playlist } from 'src/app/model/playlist';
 })
 export class PlaylistTableComponent implements OnInit {
   playlists: Playlist[] = [];
+  ready: boolean  = false;
+  error: boolean  = false;
 
   constructor(private spotify: AuthServiceService) { }
 
@@ -19,10 +21,12 @@ export class PlaylistTableComponent implements OnInit {
     if(token != null) {
       this.spotify.getPlaylists({token: token}).subscribe(
         (response: Page<Playlist>) => {
-          this.playlists = response.items;          
+          this.playlists = response.items;
+          this.ready = true;       
         },
         (error: HttpErrorResponse) => {
-          //show error
+          this.ready = true;
+          this.error = true;  
         })
       }
       
