@@ -46,7 +46,7 @@ public class MainController {
         return spotifyAuthService.getPlaylists(request);
     }
 
-    @GetMapping("playlists/{id}")
+    @PostMapping("playlists/{id}")
     @ResponseBody
     public SpotifyPage<Track> getPlaylistTracks(@RequestBody @Valid Token request, @PathParam("id") String id) {
         return spotifyAuthService.getPlaylistTracks(request, id);

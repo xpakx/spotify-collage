@@ -2,21 +2,21 @@
     <thead>
       <tr>
         <th></th>
-        <th>Playlist name</th>
+        <th>Song</th>
         <th>Artist</th>
         <th>Album</th>
         <th><span class="fa fa-calendar-o"></span></th>
-        <th><span class="fa fa-music"></span></th>
+        <th><span class="fa fa-clock-o"></span></th>
       </tr>
     </thead>
     <tbody>
-      <tr tabindex="1" *ngFor="let playlist of playlists">
+      <tr tabindex="1" *ngFor="let track of tracks">
         <td><span class="fa fa-check"></span></td>
-        <td><a [href]="'/playlists/'+playlist.id">{{playlist.name}}</a></td>
+        <td>{{track.name}}</td>
         <td>blablabla</td>
         <td>blablabla</td>
         <td class="secondary-info">2016-07-23</td>
-        <td class="secondary-info">{{playlist.tracks.total}}</td>
+        <td class="secondary-info">3:54</td>
       </tr>
     </tbody>
   </table>

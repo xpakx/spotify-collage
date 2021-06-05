@@ -4,6 +4,7 @@ import io.github.xpakx.spotifycollage.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 
@@ -97,15 +98,15 @@ public class SpotifyService {
         headers.set("Authorization", "Bearer " + token);
         HttpEntity<String> entity = new HttpEntity<>("", headers);
 
-        ResponseEntity<SpotifyPage> response = restTemplate.exchange(
+        ResponseEntity<SpotifyPage<Track>> response = restTemplate.exchange(
                 "https://api.spotify.com/v1/me/top/tracks?limit=50",
                 HttpMethod.GET,
                 entity,
-                SpotifyPage.class
+                new ParameterizedTypeReference<SpotifyPage<Track>>() {}
         );
 
-        SpotifyPage<Track> responseBody = (SpotifyPage<Track>) ((SpotifyPage<?>) response.getBody());
-        List<Track> tracks = responseBody.getItems();
+        SpotifyPage<Track> responseBody = response.getBody();
+        List<Track> tracks = responseBody != null ? responseBody.getItems() : new ArrayList<>();
         for(Track track: tracks) {logger.error("Track: " + track.getName());}
         return tracks;
     }
