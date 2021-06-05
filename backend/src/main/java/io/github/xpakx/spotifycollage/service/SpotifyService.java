@@ -130,7 +130,7 @@ public class SpotifyService {
 
     public SpotifyPage<Track> getPlaylistTracks(Token token, String id) {
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "Bearer " + token);
+        headers.set("Authorization", "Bearer " + token.getToken());
         HttpEntity<String> entity = new HttpEntity<>("", headers);
 
         ResponseEntity<PlaylistWithTracks> response = restTemplate.exchange(
