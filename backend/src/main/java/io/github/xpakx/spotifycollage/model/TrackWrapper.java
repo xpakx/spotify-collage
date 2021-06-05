@@ -8,4 +8,5 @@ import lombok.Setter;
 public class TrackWrapper {
     Track track;
     boolean is_local;
+    String added_at;
 }

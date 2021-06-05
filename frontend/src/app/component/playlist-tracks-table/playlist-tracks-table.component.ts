@@ -33,4 +33,15 @@ export class PlaylistTracksTableComponent implements OnInit {
         })
       }      
     }
+  
+  msToTime(s: number): string {
+      var ms = s % 1000;
+      s = (s - ms) / 1000;
+      var secs = s % 60;
+      s = (s - secs) / 60;
+      var mins = s % 60;
+      var hrs = (s - mins) / 60;
+    
+      return (hrs>0 ? hrs + ':' : '') + (mins>9 ? mins : '0' + mins) + ':' + (secs>9 ? secs : '0' + secs);
+    }
 }
