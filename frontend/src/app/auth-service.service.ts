@@ -10,6 +10,7 @@ import { Playlist } from './model/playlist';
 import { Page } from './model/page';
 import { Token } from './model/token';
 import { Track } from './model/track';
+import { TrackWrapper } from './model/track-wrapper';
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +36,7 @@ export class AuthServiceService {
     return this.http.post<Page<Playlist>>(`${this.url}/playlists`, request);
   }
 
-  public getPlaylistTracks(request: Token, id: String): Observable<Page<Track>> {
-    return this.http.post<Page<Track>>(`${this.url}/playlists/${id}`, request);
+  public getPlaylistTracks(request: Token, id: String): Observable<Page<TrackWrapper>> {
+    return this.http.post<Page<TrackWrapper>>(`${this.url}/playlists/${id}`, request);
   }
 }

@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AuthServiceService } from 'src/app/auth-service.service';
 import { Page } from 'src/app/model/page';
 import { Track } from 'src/app/model/track';
+import { TrackWrapper } from 'src/app/model/track-wrapper';
 
 @Component({
   selector: 'app-playlist-tracks-table',
@@ -11,7 +12,7 @@ import { Track } from 'src/app/model/track';
   styleUrls: ['./playlist-tracks-table.component.css']
 })
 export class PlaylistTracksTableComponent implements OnInit {
-  tracks: Track[] = [];
+  tracks: TrackWrapper[] = [];
   ready: boolean  = false;
   error: boolean  = false;
 
@@ -22,7 +23,7 @@ export class PlaylistTracksTableComponent implements OnInit {
     let id = this.route.snapshot.paramMap.get("id");
     if(token != null && id != null) {
       this.spotify.getPlaylistTracks({token: token}, id).subscribe(
-        (response: Page<Track>) => {
+        (response: Page<TrackWrapper>) => {
           this.tracks = response.items;
           this.ready = true;       
         },
