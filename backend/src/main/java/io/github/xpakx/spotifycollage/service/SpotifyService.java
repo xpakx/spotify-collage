@@ -128,7 +128,7 @@ public class SpotifyService {
         return result;
     }
 
-    public SpotifyPage<Track> getPlaylistTracks(Token token, String id) {
+    public SpotifyPage<TrackWrapper> getPlaylistTracks(Token token, String id) {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + token.getToken());
         HttpEntity<String> entity = new HttpEntity<>("", headers);

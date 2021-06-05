@@ -5,8 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class PlaylistWithTracks {
-    String id;
-    String name;
-    SpotifyPage<TrackWrapper> tracks;
+public class TrackWrapper {
+    Track track;
+    boolean is_local;
 }
