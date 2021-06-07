@@ -93,9 +93,9 @@ public class SpotifyService {
         return (String) result.get("display_name");
     }
 
-    public List<Track> getBestTracks(String token) {
+    public SpotifyPage<Track> getBestTracks(Token token) {
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "Bearer " + token);
+        headers.set("Authorization", "Bearer " + token.getToken());
         HttpEntity<String> entity = new HttpEntity<>("", headers);
 
         ResponseEntity<SpotifyPage<Track>> response = restTemplate.exchange(
@@ -106,9 +106,7 @@ public class SpotifyService {
         );
 
         SpotifyPage<Track> responseBody = response.getBody();
-        List<Track> tracks = responseBody != null ? responseBody.getItems() : new ArrayList<>();
-        for(Track track: tracks) {logger.error("Track: " + track.getName());}
-        return tracks;
+        return responseBody;
     }
 
     public SpotifyPage<Playlist> getPlaylists(Token token) {

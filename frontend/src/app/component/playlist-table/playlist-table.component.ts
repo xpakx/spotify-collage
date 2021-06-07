@@ -28,7 +28,10 @@ export class PlaylistTableComponent implements OnInit {
           this.ready = true;
           this.error = true;  
         })
-      }
+      } else {
+		  this.ready = true;
+          this.error = true;  
+	  }
       
     }
   }

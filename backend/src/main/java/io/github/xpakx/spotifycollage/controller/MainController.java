@@ -20,7 +20,6 @@ public class MainController {
         this.spotifyAuthService = spotifyAuthService;
     }
 
-
     @GetMapping("login")
     @ResponseBody
     public AuthAddressResponse spotifyLogin() throws Exception {
@@ -49,5 +48,11 @@ public class MainController {
     @ResponseBody
     public SpotifyPage<TrackWrapper> getPlaylistTracks(@RequestBody @Valid Token request, @PathVariable("id") String id) {
         return spotifyAuthService.getPlaylistTracks(request, id);
+    }
+
+    @PostMapping("top")
+    @ResponseBody
+    public SpotifyPage<Track> getTopTracks(@RequestBody @Valid Token request) {
+        return spotifyAuthService.getBestTracks(request);
     }
 }
