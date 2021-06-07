@@ -1,7 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
+import { ReadVarExpr } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
+import { observable, Observable, of, Subscriber } from 'rxjs';
 import { AuthServiceService } from 'src/app/auth-service.service';
 import { Page } from 'src/app/model/page';
 import { TrackWrapper } from 'src/app/model/track-wrapper';
@@ -47,6 +49,16 @@ export class PlaylistTracksTableComponent implements OnInit {
     }
 
 
+    getImage(blob: Blob): Observable<string> {
+      return Observable.create( (obs: any) => {
+        const reader = new FileReader();
+        reader.onerror = err => obs.error(err);
+        reader.onabort = err => obs.error(err);
+        reader.onload = () => obs.next(reader.result);
+        reader.onloadend = () => obs.complete();
+        return reader.readAsDataURL(blob);
+      });
+    }
 
 
     test(): void {
@@ -55,15 +67,11 @@ export class PlaylistTracksTableComponent implements OnInit {
       if(token != null && id != null) {
         this.spotify.getPlaylistCollage(token, id).subscribe(
           (response: Blob) => { 
-            let base64data;
-            var reader = new FileReader();
-            reader.readAsDataURL(response); 
-            reader.onloadend = function() {
-              base64data = reader.result; 
-            }  
-            
-            this.imgSrc = this.sanitizer
-              .bypassSecurityTrustUrl('data:image/png;base64,' + base64data);  
+            this.getImage(response).subscribe(
+              (result: string) => {
+                this.imgSrc = this.sanitizer
+                .bypassSecurityTrustUrl(result); 
+              });
           },
           (error: HttpErrorResponse) => {
             this.error = true;  
