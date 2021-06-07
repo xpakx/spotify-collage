@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.InputStream;
 
 @RestController
 public class MainController {
@@ -32,12 +33,6 @@ public class MainController {
         return spotifyAuthService.requestToken(request);
     }
 
-    @PostMapping("image")
-    @ResponseBody
-    public CollageResponse getCollage(@RequestBody @Valid CollageRequest request) {
-        return spotifyAuthService.getCollage(request);
-    }
-
     @PostMapping("playlists")
     @ResponseBody
     public SpotifyPage<Playlist> getPlaylists(@RequestBody @Valid Token request) {
@@ -54,5 +49,11 @@ public class MainController {
     @ResponseBody
     public SpotifyPage<Track> getTopTracks(@RequestBody @Valid Token request) {
         return spotifyAuthService.getBestTracks(request);
+    }
+
+    @GetMapping(value = "playlists/{id}/image", produces = "image/jpg")
+    @ResponseBody
+    public byte[] getPlaylistCollage(@PathVariable String id, @RequestParam String token)  {
+        return spotifyAuthService.getPlaylistCollage(token, id);
     }
 }

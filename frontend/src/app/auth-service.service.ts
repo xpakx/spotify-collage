@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { SpotifyAddress } from './model/spotify-address';
 import { Observable } from 'rxjs';
 import { Collage } from './model/collage';
@@ -38,5 +38,11 @@ export class AuthServiceService {
 
   public getPlaylistTracks(request: Token, id: String): Observable<Page<TrackWrapper>> {
     return this.http.post<Page<TrackWrapper>>(`${this.url}/playlists/${id}`, request);
+  }
+
+  public getPlaylistCollage(token: string, id: String): Observable<Blob> {
+    let params = new HttpParams();
+    params = params.append('token', token);
+    return this.http.get(`${this.url}/playlists/${id}/image`, { responseType: 'blob', params: params });
   }
 }

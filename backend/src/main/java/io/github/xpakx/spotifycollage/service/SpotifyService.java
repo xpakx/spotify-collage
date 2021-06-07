@@ -8,12 +8,21 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.net.URLEncoder;
 
 import org.springframework.web.client.RestTemplate;
 
+import javax.imageio.ImageIO;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -170,12 +179,52 @@ public class SpotifyService {
     public CollageResponse getCollage(CollageRequest request) {
         CollageResponse response = new CollageResponse();
         response.setUsername(getUserData(request.getToken()));
-        response.setAlbums(
-                generateAlbumList(
-                        getBestTracks(request.getToken()),
-                        request.getSize()
-                )
-        );
+
         return response;
+    }
+
+    public Image getImageFromUri(String uri) {
+        Image image = null;
+        try {
+            URL url = new URL(uri);
+            image = ImageIO.read(url);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return image;
+    }
+
+    public byte[] getPlaylistCollage(String token, String id) {
+        Token temp = new Token(); temp.setToken(token);
+        List<Track> tracks = getPlaylistTracks(temp, id)
+                .getItems()
+                .stream()
+                .map(TrackWrapper::getTrack)
+                .collect(Collectors.toList());
+        List<Image> albums = generateAlbumList(tracks, 3)
+                .stream()
+                .map((a) -> getImageFromUri(a.getImages().get(0).getUrl()))
+                .collect(Collectors.toList());
+        BufferedImage image =
+                new BufferedImage(3*640, 3*640,
+                        BufferedImage.TYPE_INT_RGB);
+
+        Graphics g = image.createGraphics();
+
+        int i = 0;
+        for(Image album : albums) {
+            g.drawImage(album,(i%3)*640,(i/3)*640, null);
+            i++;
+        }
+        g.dispose();
+
+        ByteArrayOutputStream bao = new ByteArrayOutputStream();
+        try {
+            ImageIO.write(image, "jpg", bao);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return bao.toByteArray();
     }
 }
