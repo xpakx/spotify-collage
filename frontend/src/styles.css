@@ -123,3 +123,25 @@ body {
     color: #dadce1;
     outline: none;
   }
+
+  button.spotifyBtn {
+    border-radius: 20px;
+    border: none;
+    padding: 5px 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 11px;
+    outline: none;
+  }
+  button.spotifyBtn:hover {
+    cursor: pointer;
+  }
+  
+  .spotifyBtn {
+    background: #1ed760;
+    color: white;
+    border: 1px solid #1ed760;
+  }
+  .spotifyBtn:hover {
+    background: #43e57d;
+  }
