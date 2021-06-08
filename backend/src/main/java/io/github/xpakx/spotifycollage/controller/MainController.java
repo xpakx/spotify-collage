@@ -56,4 +56,10 @@ public class MainController {
     public byte[] getPlaylistCollage(@PathVariable String id, @RequestParam String token)  {
         return spotifyAuthService.getPlaylistCollage(token, id);
     }
+
+    @GetMapping(value = "top/image", produces = "image/jpg")
+    @ResponseBody
+    public byte[] getBestTracksCollage(@RequestParam String token)  {
+        return spotifyAuthService.getBestTracksCollage(token);
+    }
 }

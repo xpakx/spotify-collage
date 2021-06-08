@@ -10,10 +10,8 @@ import org.springframework.stereotype.Service;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.net.URLEncoder;
 
@@ -176,14 +174,14 @@ public class SpotifyService {
         return result;
     }
 
-    public CollageResponse getCollage(CollageRequest request) {
+    public CollageResponse getCollageToBytes(CollageRequest request) {
         CollageResponse response = new CollageResponse();
         response.setUsername(getUserData(request.getToken()));
 
         return response;
     }
 
-    public Image getImageFromUri(String uri) {
+    private Image getImageFromUri(String uri) {
         Image image = null;
         try {
             URL url = new URL(uri);
@@ -195,25 +193,42 @@ public class SpotifyService {
     }
 
     public byte[] getPlaylistCollage(String token, String id) {
+        Integer size = 3;
         Token temp = new Token(); temp.setToken(token);
         List<Track> tracks = getPlaylistTracks(temp, id)
                 .getItems()
                 .stream()
                 .map(TrackWrapper::getTrack)
                 .collect(Collectors.toList());
-        List<Image> albums = generateAlbumList(tracks, 3)
+        List<Image> albums = generateAlbumList(tracks, size)
                 .stream()
                 .map((a) -> getImageFromUri(a.getImages().get(0).getUrl()))
                 .collect(Collectors.toList());
+        return getCollageToBytes(size, albums);
+    }
+
+    public byte[] getBestTracksCollage(String token) {
+        Integer size = 3;
+        Token temp = new Token(); temp.setToken(token);
+        List<Track> tracks = getBestTracks(temp)
+                .getItems();
+        List<Image> albums = generateAlbumList(tracks, size)
+                .stream()
+                .map((a) -> getImageFromUri(a.getImages().get(0).getUrl()))
+                .collect(Collectors.toList());
+        return getCollageToBytes(size, albums);
+    }
+
+    private byte[] getCollageToBytes(Integer size, List<Image> albums) {
         BufferedImage image =
-                new BufferedImage(3*640, 3*640,
+                new BufferedImage(size *640, size *640,
                         BufferedImage.TYPE_INT_RGB);
 
         Graphics g = image.createGraphics();
 
         int i = 0;
         for(Image album : albums) {
-            g.drawImage(album,(i%3)*640,(i/3)*640, null);
+            g.drawImage(album,(i% size)*640,(i/ size)*640, null);
             i++;
         }
         g.dispose();
