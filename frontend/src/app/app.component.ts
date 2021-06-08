@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthServiceService } from './auth-service.service';
+import { SpotifyService } from './auth-service.service';
 import { Collage } from './model/collage';
 import { CollageRequest } from './model/collage-request';
 import { SpotifyAddress } from './model/spotify-address';
@@ -22,7 +22,7 @@ export class AppComponent  implements OnInit {
   collage!: Collage;
   
 
-  constructor(private service: AuthServiceService, private route: ActivatedRoute, private router: Router) {
+  constructor(private service: SpotifyService, private route: ActivatedRoute, private router: Router) {
 	  
 	}
 	  

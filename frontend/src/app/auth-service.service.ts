@@ -15,7 +15,7 @@ import { TrackWrapper } from './model/track-wrapper';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthServiceService {
+export class SpotifyService {
   url = "http://192.168.1.204:8080"
 
   constructor(private http: HttpClient) { }

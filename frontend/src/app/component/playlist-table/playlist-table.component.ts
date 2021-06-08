@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { AuthServiceService } from 'src/app/auth-service.service';
+import { SpotifyService } from 'src/app/auth-service.service';
 import { Page } from 'src/app/model/page';
 import { Playlist } from 'src/app/model/playlist';
 
@@ -14,7 +14,7 @@ export class PlaylistTableComponent implements OnInit {
   ready: boolean  = false;
   error: boolean  = false;
 
-  constructor(private spotify: AuthServiceService) { }
+  constructor(private spotify: SpotifyService) { }
 
   ngOnInit(): void {
     let token = localStorage.getItem("token");

@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { observable, Observable, of, Subscriber } from 'rxjs';
-import { AuthServiceService } from 'src/app/auth-service.service';
+import { SpotifyService } from 'src/app/auth-service.service';
 import { Page } from 'src/app/model/page';
 import { TrackWrapper } from 'src/app/model/track-wrapper';
 
@@ -19,7 +19,7 @@ export class PlaylistTracksTableComponent implements OnInit {
   error: boolean  = false;
   imgSrc!: SafeUrl;
 
-  constructor(private spotify: AuthServiceService, private route: ActivatedRoute, private sanitizer : DomSanitizer) { }
+  constructor(private spotify: SpotifyService, private route: ActivatedRoute, private sanitizer : DomSanitizer) { }
 
   ngOnInit(): void {
     let token = localStorage.getItem("token");
