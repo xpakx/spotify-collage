@@ -7,14 +7,14 @@
   </div>
 </nav>
 
-<table class="table table-songs">
+<table class="table table-songs container-fluid">
     <thead>
       <tr>
         <th></th>
         <th>Song</th>
         <th>Artist</th>
-        <th>Album</th>
-        <th><span class="fa fa-calendar-o"></span></th>
+        <th class="sm-hide">Album</th>
+        <th class="sm-hide"><span class="fa fa-calendar-o"></span></th>
         <th><span class="fa fa-clock-o"></span></th>
       </tr>
     </thead>
@@ -23,8 +23,8 @@
         <td><span class="fa fa-check"></span></td>
         <td>{{track.track.name}}</td>
         <td>{{track.track.artists[0].name}}</td>
-        <td>{{track.track.album.name.substr(0,30)}}</td>
-        <td class="secondary-info">{{track.added_at.substr(0,10)}}</td>
+        <td class="sm-hide">{{track.track.album.name.substr(0,30)}}</td>
+        <td class="secondary-info sm-hide">{{track.added_at.substr(0,10)}}</td>
         <td class="secondary-info">{{msToTime(track.track.duration_ms)}}</td>
       </tr>
     </tbody>

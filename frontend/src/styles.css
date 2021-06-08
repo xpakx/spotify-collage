@@ -1,7 +1,6 @@
 body {
     background-color: black;
     color: #dadce1;
-    min-width: 960px;
   }
 
   
@@ -145,3 +144,18 @@ body {
   .spotifyBtn:hover {
     background: #43e57d;
   }
+
+
+  @media (max-width: 767px) { 
+    .sm-hide    {
+        display: none
+    }
+
+    .side-nav .fa {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+    .side-nav .brand-icon .fa {
+      font-size: 30px;
+    }
+}
