@@ -25,7 +25,9 @@ export class AuthServiceService {
   }
 
   public getCollage(request: CollageRequest): Observable<Collage> {
-    return this.http.post<Collage>(`${this.url}/image`, request);
+	let params = new HttpParams();
+    params = params.append('token', request.token);
+    return this.http.get<Collage>(`${this.url}/image`, { params: params });
   }
 
   public getToken(request: TokenRequest): Observable<TokenResponse> {
@@ -33,11 +35,15 @@ export class AuthServiceService {
   }
 
   public getPlaylists(request: Token): Observable<Page<Playlist>> {
-    return this.http.post<Page<Playlist>>(`${this.url}/playlists`, request);
+	let params = new HttpParams();
+    params = params.append('token', request.token);
+    return this.http.get<Page<Playlist>>(`${this.url}/playlists`, { params: params });
   }
 
   public getPlaylistTracks(request: Token, id: String): Observable<Page<TrackWrapper>> {
-    return this.http.post<Page<TrackWrapper>>(`${this.url}/playlists/${id}`, request);
+	let params = new HttpParams();
+    params = params.append('token', request.token);
+    return this.http.get<Page<TrackWrapper>>(`${this.url}/playlists/${id}`, { params: params });
   }
 
   public getPlaylistCollage(token: string, id: String): Observable<Blob> {
