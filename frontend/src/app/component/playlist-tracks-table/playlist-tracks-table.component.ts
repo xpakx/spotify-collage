@@ -18,6 +18,7 @@ export class PlaylistTracksTableComponent implements OnInit {
   ready: boolean  = false;
   error: boolean  = false;
   imgSrc!: SafeUrl;
+  collageLoad: boolean = false;
 
   constructor(private spotify: SpotifyService, private route: ActivatedRoute, private sanitizer : DomSanitizer) { }
 
@@ -65,15 +66,18 @@ export class PlaylistTracksTableComponent implements OnInit {
       let token = localStorage.getItem("token");
       let id = this.route.snapshot.paramMap.get("id");
       if(token != null && id != null) {
+        this.collageLoad = true;
         this.spotify.getPlaylistCollage(token, id).subscribe(
           (response: Blob) => { 
             this.getImage(response).subscribe(
               (result: string) => {
                 this.imgSrc = this.sanitizer
                 .bypassSecurityTrustUrl(result); 
+                this.collageLoad = false;
               });
           },
           (error: HttpErrorResponse) => {
+            this.collageLoad = true;
             this.error = true;  
           })
         }      

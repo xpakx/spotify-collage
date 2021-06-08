@@ -17,6 +17,7 @@ export class TrackTableComponent implements OnInit {
   ready: boolean  = false;
   error: boolean  = false;
   imgSrc!: SafeUrl;
+  collageLoad: boolean = false;
 
   constructor(private spotify: SpotifyService, private route: ActivatedRoute, private sanitizer : DomSanitizer) { }
 
@@ -62,16 +63,19 @@ export class TrackTableComponent implements OnInit {
     test(): void {
       let token = localStorage.getItem("token");
       if(token != null) {
+        this.collageLoad = true;
         this.spotify.getCollage(token).subscribe(
           (response: Blob) => { 
             this.getImage(response).subscribe(
               (result: string) => {
                 this.imgSrc = this.sanitizer
                 .bypassSecurityTrustUrl(result); 
+                this.collageLoad = false;
               });
           },
           (error: HttpErrorResponse) => {
             this.error = true;  
+            this.collageLoad = true;
           })
         }      
       }

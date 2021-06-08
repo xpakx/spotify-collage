@@ -5,7 +5,7 @@
          <ul class="nav">
            <li class="brand-icon"><span class="fa fa-spotify"></span></li>
 
-           <li class="active"><a href="#"><span class="fa fa-headphones"></span>Browse</a></li>
+           <li class="active"><a href="/playlists"><span class="fa fa-headphones"></span>Browse</a></li>
            <li><a [href]="url"><span class="fa fa-refresh"></span>Connect</a></li>
            <li><a href="#"><span class="fa fa-feed"></span>Radio</a></li>
            
@@ -14,18 +14,7 @@
       </nav>
     </section>
     <section class="col-xs-11 clean-paddings">
-      <nav>
-        <div class="top-nav container-fluid">
-          <ul class="nav navbar-nav">
-            <li><a href="/playlists">Playlists</a></li>
-            <li class="active"><a href="/top">Top Tracks</a></li>
-          </ul>
-        </div>
-      </nav>
-
       <div *ngIf="username">Logged as {{username}}</div>
-      
-      <!-- <app-track-table></app-track-table> -->
       <router-outlet></router-outlet>
     </section>
   </div>

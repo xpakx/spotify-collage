@@ -1,3 +1,12 @@
+<nav>
+  <div class="top-nav container-fluid">
+    <ul class="nav navbar-nav">
+      <li><a href="/playlists">Playlists</a></li>
+      <li class="active"><a href="/top">Top Tracks</a></li>
+    </ul>
+  </div>
+</nav>
+
 <table class="table table-songs">
   <thead>
     <tr>
@@ -26,5 +35,10 @@
   <i class="fa fa-exclamation-triangle"></i> Error
 </div>
 
-<button class="spotifyBtn" (click)="test()">Generate Collage</button>
+<button class="spotifyBtn" (click)="test()">
+  <span class="fa loading" *ngIf="collageLoad">
+    <i class="fa fa-spinner fa-spin"></i>
+  </span>
+  Generate Collage
+</button>
 <img class="collage" [src]="imgSrc" *ngIf="imgSrc" />
