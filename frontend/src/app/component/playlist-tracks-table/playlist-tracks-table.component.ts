@@ -25,7 +25,7 @@ export class PlaylistTracksTableComponent implements OnInit {
     let token = localStorage.getItem("token");
     let id = this.route.snapshot.paramMap.get("id");
     if(token != null && id != null) {
-      this.spotify.getPlaylistTracks({token: token}, id).subscribe(
+      this.spotify.getPlaylistTracks(token, id).subscribe(
         (response: Page<TrackWrapper>) => {
           this.tracks = response.items;
           this.ready = true;       

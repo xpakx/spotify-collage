@@ -19,7 +19,7 @@ export class PlaylistTableComponent implements OnInit {
   ngOnInit(): void {
     let token = localStorage.getItem("token");
     if(token != null) {
-      this.spotify.getPlaylists({token: token}).subscribe(
+      this.spotify.getPlaylists(token).subscribe(
         (response: Page<Playlist>) => {
           this.playlists = response.items;
           this.ready = true;       

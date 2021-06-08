@@ -28,21 +28,21 @@ export class SpotifyService {
     return this.http.post<TokenResponse>(`${this.url}/token`, request);
   }
 
-  public getPlaylists(request: Token): Observable<Page<Playlist>> {
+  public getPlaylists(token: string): Observable<Page<Playlist>> {
 	let params = new HttpParams();
-    params = params.append('token', request.token);
+    params = params.append('token', token);
     return this.http.get<Page<Playlist>>(`${this.url}/playlists`, { params: params });
   }
 
-  public getPlaylistTracks(request: Token, id: String): Observable<Page<TrackWrapper>> {
+  public getPlaylistTracks(token: string, id: String): Observable<Page<TrackWrapper>> {
 	let params = new HttpParams();
-    params = params.append('token', request.token);
+    params = params.append('token', token);
     return this.http.get<Page<TrackWrapper>>(`${this.url}/playlists/${id}`, { params: params });
   }
   
-  public getBestTracks(request: Token): Observable<Page<Track>> {
+  public getBestTracks(token: string): Observable<Page<Track>> {
 	let params = new HttpParams();
-    params = params.append('token', request.token);
+    params = params.append('token', token);
     return this.http.get<Page<Track>>(`${this.url}/top`, { params: params });
   }
 

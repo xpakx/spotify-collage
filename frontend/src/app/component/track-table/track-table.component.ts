@@ -23,7 +23,7 @@ export class TrackTableComponent implements OnInit {
   ngOnInit(): void {
     let token = localStorage.getItem("token");
     if(token != null) {
-      this.spotify.getBestTracks({token: token}).subscribe(
+      this.spotify.getBestTracks(token).subscribe(
         (response: Page<Track>) => {
           this.tracks = response.items;
           this.ready = true;       
