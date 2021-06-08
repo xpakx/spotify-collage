@@ -100,9 +100,9 @@ public class SpotifyService {
         return (String) result.get("display_name");
     }
 
-    public SpotifyPage<Track> getBestTracks(Token token) {
+    public SpotifyPage<Track> getBestTracks(String token) {
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "Bearer " + token.getToken());
+        headers.set("Authorization", "Bearer " + token);
         HttpEntity<String> entity = new HttpEntity<>("", headers);
 
         ResponseEntity<SpotifyPage<Track>> response = restTemplate.exchange(
@@ -116,9 +116,9 @@ public class SpotifyService {
         return responseBody;
     }
 
-    public SpotifyPage<Playlist> getPlaylists(Token token) {
+    public SpotifyPage<Playlist> getPlaylists(String token) {
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "Bearer " + token.getToken());
+        headers.set("Authorization", "Bearer " + token);
         HttpEntity<String> entity = new HttpEntity<>("", headers);
 
         ResponseEntity<SpotifyPage> response = restTemplate.exchange(
@@ -133,9 +133,9 @@ public class SpotifyService {
         return result;
     }
 
-    public SpotifyPage<TrackWrapper> getPlaylistTracks(Token token, String id) {
+    public SpotifyPage<TrackWrapper> getPlaylistTracks(String token, String id) {
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "Bearer " + token.getToken());
+        headers.set("Authorization", "Bearer " + token);
         HttpEntity<String> entity = new HttpEntity<>("", headers);
 
         ResponseEntity<PlaylistWithTracks> response = restTemplate.exchange(
@@ -194,8 +194,7 @@ public class SpotifyService {
 
     public byte[] getPlaylistCollage(String token, String id) {
         Integer size = 3;
-        Token temp = new Token(); temp.setToken(token);
-        List<Track> tracks = getPlaylistTracks(temp, id)
+        List<Track> tracks = getPlaylistTracks(token, id)
                 .getItems()
                 .stream()
                 .map(TrackWrapper::getTrack)
@@ -209,8 +208,7 @@ public class SpotifyService {
 
     public byte[] getBestTracksCollage(String token) {
         Integer size = 3;
-        Token temp = new Token(); temp.setToken(token);
-        List<Track> tracks = getBestTracks(temp)
+        List<Track> tracks = getBestTracks(token)
                 .getItems();
         List<Image> albums = generateAlbumList(tracks, size)
                 .stream()

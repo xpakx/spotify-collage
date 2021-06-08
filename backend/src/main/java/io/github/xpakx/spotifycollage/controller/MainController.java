@@ -33,22 +33,22 @@ public class MainController {
         return spotifyAuthService.requestToken(request);
     }
 
-    @PostMapping("playlists")
+    @GetMapping("playlists")
     @ResponseBody
-    public SpotifyPage<Playlist> getPlaylists(@RequestBody @Valid Token request) {
-        return spotifyAuthService.getPlaylists(request);
+    public SpotifyPage<Playlist> getPlaylists(@RequestParam String token) {
+        return spotifyAuthService.getPlaylists(token);
     }
 
-    @PostMapping("playlists/{id}")
+    @GetMapping("playlists/{id}")
     @ResponseBody
-    public SpotifyPage<TrackWrapper> getPlaylistTracks(@RequestBody @Valid Token request, @PathVariable("id") String id) {
-        return spotifyAuthService.getPlaylistTracks(request, id);
+    public SpotifyPage<TrackWrapper> getPlaylistTracks(@RequestParam String token, @PathVariable("id") String id) {
+        return spotifyAuthService.getPlaylistTracks(token, id);
     }
 
-    @PostMapping("top")
+    @GetMapping("top")
     @ResponseBody
-    public SpotifyPage<Track> getTopTracks(@RequestBody @Valid Token request) {
-        return spotifyAuthService.getBestTracks(request);
+    public SpotifyPage<Track> getTopTracks(@RequestParam String token) {
+        return spotifyAuthService.getBestTracks(token);
     }
 
     @GetMapping(value = "playlists/{id}/image", produces = "image/jpg")
