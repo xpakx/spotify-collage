@@ -147,8 +147,9 @@ body {
 
 
   @media (max-width: 767px) { 
-    .sm-hide    {
-        display: none
+    .side-nav {
+      min-height: 20px;
+      text-align: left;
     }
 
     .side-nav .fa {
@@ -156,6 +157,30 @@ body {
       margin-bottom: 10px;
     }
     .side-nav .brand-icon .fa {
-      font-size: 30px;
+      font-size: 50px;
+      padding-right: 20px;
+      padding-left: 10px;
     }
+
+   
+    .side-nav ul > li {
+      display: inline-block;
+      zoom:1;
+    }
+ 
+    .side-nav li a {
+      border-bottom: 3px solid transparent;
+      border-left: none;
+      padding-right: 15px;
+    }
+
+    .sm-hide    {
+      display: none;
+  }
+}
+
+@media (min-width: 767px) { 
+  .md-hide    {
+    display: none;
+  }
 }

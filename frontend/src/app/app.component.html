@@ -1,6 +1,6 @@
 <div class="container-fluid spotify-app">
   <div class="row">
-    <section class="col-xs-1 side-nav clean-paddings">
+    <section class="col-md-1 side-nav clean-paddings">
       <nav class="navbar">
          <ul class="nav">
            <li class="brand-icon"><span class="fa fa-spotify"></span></li>
@@ -13,7 +13,8 @@
         </ul>
       </nav>
     </section>
-    <section class="col-xs-11 clean-paddings">
+
+    <section class="col-md-11 clean-paddings">
       <div *ngIf="username">Logged as {{username}}</div>
       <router-outlet></router-outlet>
     </section>
