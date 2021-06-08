@@ -41,27 +41,6 @@ export class AppComponent  implements OnInit {
     );
   }
 
-  getAlbums(result: {term: string, size: number}): void {
-	  this.token = localStorage.getItem("token");
-    if(this.token===null) {return;}
-    let request: CollageRequest = new CollageRequest(
-      result.term ? result.term : 'long_term', 
-      result.size ? result.size : 3, 
-      this.token, 
-      false
-      );
-    this.service.getCollage(request).subscribe(
-      (response: Collage) => {
-        this.collage = response;
-        this.token = null;
-      },
-      (error: HttpErrorResponse) => {
-        //show error
-        this.token = null;
-      }
-    );
-  }
-
   getPlaylists(): void {
     this.router.navigate(["/playlists"]);
   }

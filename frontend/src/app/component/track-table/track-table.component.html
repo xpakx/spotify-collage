@@ -1,22 +1,30 @@
 <table class="table table-songs">
-    <thead>
-      <tr>
-        <th></th>
-        <th>Song</th>
-        <th>Artist</th>
-        <th>Album</th>
-        <th><span class="fa fa-calendar-o"></span></th>
-        <th><span class="fa fa-clock-o"></span></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr tabindex="1">
-        <td><span class="fa fa-check"></span></td>
-        <td>blablabla</td>
-        <td>blablabla</td>
-        <td>blablabla</td>
-        <td class="secondary-info">2016-07-23</td>
-        <td class="secondary-info">3:54</td>
-      </tr>
-    </tbody>
-  </table>
+  <thead>
+    <tr>
+      <th></th>
+      <th>Song</th>
+      <th>Artist</th>
+      <th>Album</th>
+      <th><span class="fa fa-clock-o"></span></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr tabindex="1" *ngFor="let track of tracks">
+      <td><span class="fa fa-check"></span></td>
+      <td>{{track.name}}</td>
+      <td>{{track.artists[0].name}}</td>
+      <td>{{track.album.name.substr(0,30)}}</td>
+      <td class="secondary-info">{{msToTime(track.duration_ms)}}</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="fa-3x loading" *ngIf="!ready">
+  <i class="fa fa-spinner fa-spin"></i>
+</div>
+<div class="error" *ngIf=error>
+  <i class="fa fa-exclamation-triangle"></i> Error
+</div>
+
+<button (click)=test()>aaa</button>
+<img class="collage" [src]="imgSrc" *ngIf="imgSrc" />

@@ -24,12 +24,6 @@ export class AuthServiceService {
     return this.http.get<SpotifyAddress>(`${this.url}/login`);
   }
 
-  public getCollage(request: CollageRequest): Observable<Collage> {
-	let params = new HttpParams();
-    params = params.append('token', request.token);
-    return this.http.get<Collage>(`${this.url}/image`, { params: params });
-  }
-
   public getToken(request: TokenRequest): Observable<TokenResponse> {
     return this.http.post<TokenResponse>(`${this.url}/token`, request);
   }
@@ -45,10 +39,22 @@ export class AuthServiceService {
     params = params.append('token', request.token);
     return this.http.get<Page<TrackWrapper>>(`${this.url}/playlists/${id}`, { params: params });
   }
+  
+  public getBestTracks(request: Token): Observable<Page<Track>> {
+	let params = new HttpParams();
+    params = params.append('token', request.token);
+    return this.http.get<Page<Track>>(`${this.url}/top`, { params: params });
+  }
 
   public getPlaylistCollage(token: string, id: String): Observable<Blob> {
     let params = new HttpParams();
     params = params.append('token', token);
     return this.http.get(`${this.url}/playlists/${id}/image`, { responseType: 'blob', params: params });
+  }
+  
+  public getCollage(token: string): Observable<Blob> {
+	let params = new HttpParams();
+    params = params.append('token', token);
+    return this.http.get(`${this.url}/top/image`, { responseType: 'blob', params: params });
   }
 }

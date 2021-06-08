@@ -1,0 +1,13 @@
+.loading {
+    text-align: center;
+}
+
+.error {
+    text-align: center;
+    color: #b71c1c;
+}
+
+.collage {
+    width: 500px;
+    height: 500px;
+}
