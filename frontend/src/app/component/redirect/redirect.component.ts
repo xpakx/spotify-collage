@@ -27,7 +27,7 @@ export class RedirectComponent implements OnInit {
           //show error
         })
     }
-    this.router.navigate(["/"]);
+    this.router.navigate(["/playlists"]);
   }
 
 }

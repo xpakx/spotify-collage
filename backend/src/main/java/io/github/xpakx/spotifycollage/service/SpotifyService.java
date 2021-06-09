@@ -173,6 +173,31 @@ public class SpotifyService {
 
         return result;
     }
+    
+     private List<Album> generateUnsortedAlbumList(List<Track> tracks, Integer size) {
+        Map<String, Album> albums = tracks.stream()
+                .map(Track::getAlbum)
+                .collect(Collectors.toMap(
+                        Album::getId,
+                        Album::getThis,
+                        (existing, replacement) -> existing
+                ));
+
+        List<Album> result = tracks.stream()
+                .collect(
+                        Collectors.groupingBy(
+                                (t) -> t.getAlbum().getId(),
+                                Collectors.counting()
+                        )
+                ).entrySet().stream()
+                .sorted(Map.Entry.<String, Long>comparingByValue().reversed())
+                .limit(size*size)
+                .map(Map.Entry::getKey)
+                .map(albums::get)
+                .collect(Collectors.toList());
+
+        return result;
+    }
 
     public CollageResponse getCollageToBytes(CollageRequest request) {
         CollageResponse response = new CollageResponse();
@@ -199,7 +224,7 @@ public class SpotifyService {
                 .stream()
                 .map(TrackWrapper::getTrack)
                 .collect(Collectors.toList());
-        List<Image> albums = generateAlbumList(tracks, size)
+        List<Image> albums = generateUnsortedAlbumList(tracks, size)
                 .stream()
                 .map((a) -> getImageFromUri(a.getImages().get(0).getUrl()))
                 .collect(Collectors.toList());
