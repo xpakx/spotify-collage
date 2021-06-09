@@ -35,12 +35,14 @@
   <i class="fa fa-exclamation-triangle"></i> Error
 </div>
 
-<button class="spotifyBtn" (click)="test()">
-  <span class="fa loading" *ngIf="collageLoad">
-    <i class="fa fa-spinner fa-spin"></i>
-  </span>
-  Generate Collage
-</button>
-<div *ngIf="imgSrc">
-  <img class="collage" [src]="imgSrc" />
+<div class="btnWrapper">
+  <button class="spotifyBtn" (click)="test()">
+    <span class="fa loading" *ngIf="collageLoad">
+      <i class="fa fa-spinner fa-spin"></i>
+    </span>
+    Generate Collage
+  </button>
+  <div *ngIf="imgSrc">
+    <img class="collage" [src]="imgSrc" />
+  </div>
 </div>

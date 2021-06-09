@@ -184,3 +184,11 @@ body {
     display: none;
   }
 }
+
+.btnWrapper {
+  text-align: center;
+}
+
+.btnWrapper button {
+  margin-bottom: 10px;
+}

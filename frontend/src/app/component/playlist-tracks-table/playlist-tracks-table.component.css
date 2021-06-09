@@ -11,3 +11,10 @@
     width: 500px;
     height: 500px;
 }
+
+@media (max-width: 767px) { 
+    .collage    {
+        width: 250px;
+        height: 250px;
+    }
+}
