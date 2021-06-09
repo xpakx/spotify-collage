@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ReadVarExpr } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { observable, Observable, of, Subscriber } from 'rxjs';
 import { SpotifyService } from 'src/app/auth-service.service';
 import { Page } from 'src/app/model/page';
@@ -20,7 +20,8 @@ export class PlaylistTracksTableComponent implements OnInit {
   imgSrc!: SafeUrl;
   collageLoad: boolean = false;
 
-  constructor(private spotify: SpotifyService, private route: ActivatedRoute, private sanitizer : DomSanitizer) { }
+  constructor(private spotify: SpotifyService, private route: ActivatedRoute, 
+    private sanitizer : DomSanitizer, private router: Router) { }
 
   ngOnInit(): void {
     let token = localStorage.getItem("token");
@@ -83,5 +84,11 @@ export class PlaylistTracksTableComponent implements OnInit {
         }      
       }
     
+  top() {
+    this.router.navigate(["/top"]);
+  }
 
+  playlists() {
+    this.router.navigate(["/playlists"]);
+  }
 }

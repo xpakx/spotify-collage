@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { SpotifyService } from 'src/app/auth-service.service';
 import { Page } from 'src/app/model/page';
 import { Playlist } from 'src/app/model/playlist';
@@ -14,7 +15,7 @@ export class PlaylistTableComponent implements OnInit {
   ready: boolean  = false;
   error: boolean  = false;
 
-  constructor(private spotify: SpotifyService) { }
+  constructor(private spotify: SpotifyService, private router: Router) { }
 
   ngOnInit(): void {
     let token = localStorage.getItem("token");
@@ -33,5 +34,13 @@ export class PlaylistTableComponent implements OnInit {
           this.error = true;  
 	  }
       
+    }
+
+    showPlaylist(id: string) {
+      this.router.navigate(["/playlists/"+id]);
+    }
+
+    top() {
+      this.router.navigate(["/top"]);
     }
   }

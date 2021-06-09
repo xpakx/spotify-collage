@@ -1,8 +1,8 @@
 <nav>
   <div class="top-nav container-fluid">
     <ul class="nav navbar-nav">
-      <li class="active"><a href="/playlists">Playlists</a></li>
-      <li><a href="/top">Top Tracks</a></li>
+      <li class="active"><a>Playlists</a></li>
+      <li><a (click)="top()">Top Tracks</a></li>
     </ul>
   </div>
 </nav>
@@ -19,7 +19,7 @@
     <tbody>
       <tr tabindex="1" *ngFor="let playlist of playlists">
         <td><span class="fa fa-check"></span></td>
-        <td><a [href]="'/playlists/'+playlist.id">{{playlist.name.substr(0,50)}}</a></td>
+        <td><a (click)="showPlaylist(playlist.id)">{{playlist.name.substr(0,50)}}</a></td>
         <td class="secondary-info">2016-07-23</td>
         <td class="secondary-info">{{playlist.tracks.total}}</td>
       </tr>
