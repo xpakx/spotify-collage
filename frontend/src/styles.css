@@ -33,6 +33,7 @@ body {
   .side-nav li a {
     border-left: 3px solid transparent;
     padding-bottom: 15px;
+    cursor: pointer;
   }
   .side-nav li.active a,
   .side-nav li a:focus,
@@ -67,6 +68,7 @@ body {
   
   .top-nav li a {
     border-bottom: 2px solid transparent;
+    cursor: pointer;
   }
   
   .top-nav li.active a,
@@ -191,4 +193,8 @@ body {
 
 .btnWrapper button {
   margin-bottom: 10px;
+}
+
+.table-songs td a {
+  cursor: pointer;
 }
