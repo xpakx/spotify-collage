@@ -41,4 +41,6 @@
   </span>
   Generate Collage
 </button>
-<img class="collage" [src]="imgSrc" *ngIf="imgSrc" />
+<div *ngIf="imgSrc">
+  <img class="collage" [src]="imgSrc" />
+</div>
