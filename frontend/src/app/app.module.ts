@@ -9,12 +9,14 @@ import { FormsModule } from '@angular/forms';
 import { TrackTableComponent } from './component/track-table/track-table.component';
 import { PlaylistTableComponent } from './component/playlist-table/playlist-table.component';
 import { PlaylistTracksTableComponent } from './component/playlist-tracks-table/playlist-tracks-table.component';
+import { CreditsComponent } from './component/credits/credits.component';
 
 const routes: Routes = [
   { path: 'redirect', component: RedirectComponent },
   { path: 'playlists', component: PlaylistTableComponent },
   { path: 'playlists/:id', component: PlaylistTracksTableComponent },
-  { path: 'top', component: TrackTableComponent }
+  { path: 'top', component: TrackTableComponent },
+  { path: 'credits', component: CreditsComponent }
 ]
 
 @NgModule({
@@ -23,7 +25,8 @@ const routes: Routes = [
     RedirectComponent,
     TrackTableComponent,
     PlaylistTableComponent,
-    PlaylistTracksTableComponent
+    PlaylistTracksTableComponent,
+    CreditsComponent
   ],
   imports: [
     BrowserModule,
