@@ -16,7 +16,7 @@ import { TrackWrapper } from './model/track-wrapper';
   providedIn: 'root'
 })
 export class SpotifyService {
-  url = "http://192.168.1.204:8080"
+  url = "http://localhost:8080"
 
   constructor(private http: HttpClient) { }
 
