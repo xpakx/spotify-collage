@@ -30,7 +30,7 @@ public class SpotifyService {
     private String clientId = "";
     @Value("${spotify.client-secret}")
     private String clientSecret = "";
-    private final String redir = "http://192.168.1.204:4200/redirect";
+    private final String redir = "http://localhost/redirect";
     private final String scope = "user-read-private user-top-read playlist-read-private";
     private final String state = "i4R8utEkEBy946";
 

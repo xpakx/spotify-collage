@@ -16,7 +16,10 @@ body {
   }
   
   
-  
+  .main-section {
+    height: 100vh;
+    overflow: scroll;
+  }
   
   .side-nav {
     background: #1c1c1f;
